@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function ajax () {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const rand = Math.random(); // 0 - 1
+          if(rand > 0.5) {
+            resolve(rand);
+          } else {
+            reject(false);
+          }
+        }, 1000);
+      })
+    }
+
+
+    /*ajax().then(res => {
+      console.log(res)
+    }).catch(e => {
+      console.log(e)
+    })*/
+
+
+
+    function *show () {
+      console.log(1);
+      const res = yield ajax();
+      console.log(res + 2);
+    }
+
+    const gen = show();
+    const res1 = gen.next();
+    // console.log(res1.value.constructor === Promise)
+    res1.value.then(res => {
+      console.log(res)
+      const res2 = gen.next(res);
+      console.log(res2)
+    }).catch(e => {
+      console.log(e)
+    })
+
+  </script>
+</body>
+</html>

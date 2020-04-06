@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Document</title>
+</head>
+<body>
+  <script type="text/javascript">
+
+    /*
+      reduce: 汇总，给一推数据进入，最终返回一个结果出来
+        求和
+        求平均数
+        ...
+
+     */
+
+    const arr = [33, 55, 66, 2, 100];
+
+    /*
+      reduce有四个参数
+      第一个参数的第一次是数组的第一项的值，之后就是内部return返回的值
+      第二个参数从数组的第二项开始的每个值
+      第三个参数是从1开始的下标值，为什么不是从0开始，因为第一个参数就是数组的第一个值，循环次数是数组长度 - 1
+      第四个参数是数组本身，可以代替this的使用，这里为什么内部不能用this？回调函数的this指向Window
+
+
+     */
+    const res = arr.reduce((temp, item, index) => {
+      return temp + item;
+    })
+
+    const average = arr.reduce(function(temp, item, index, arrList) {
+      if(index != arrList.length - 1) {
+        return temp + item;
+      }else {
+        return (temp + item) / arrList.length;
+      }
+
+
+    })
+
+    console.log(res, average)
+
+    function init (cb) {
+      cb && cb();
+    }
+
+    init(function () {
+      console.log(this)
+    })
+
+  </script>
+</body>
+</html>

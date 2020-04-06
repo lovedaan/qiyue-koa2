@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*function show () {
+      alert(1);
+      alert(2);
+    }
+    show();*/
+
+
+
+    function *show () {
+      alert(1);
+      const c = yield 6;
+      alert(c + 2);
+    }
+
+    const gen = show();
+    console.dir(gen)
+    const res1 = gen.next();
+    console.log(res1)
+    const res2 = gen.next(7);
+    console.log(res2)
+  </script>
+</body>
+</html>
