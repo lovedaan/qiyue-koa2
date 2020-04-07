@@ -1,11 +1,14 @@
 const Koa = require('koa');
 const koaBody = require('koa-body');
+const ErrorHandle = require('./middlewares/exception');
 // const mysql = require('mysql2/promise');
 const InitManager = require('./core/init');
 /*const classic = require('./api/v1/classic');
 const book = require('./api/v1/book');*/
 
 const app = new Koa();
+
+app.use(ErrorHandle);
 
 // 注册解析post参数的中间件
 app.use(koaBody({

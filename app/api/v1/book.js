@@ -1,7 +1,19 @@
 const Router = require('koa-router');
 const router = new Router();
+const { HttpException } = require('../../../core/http-exception');
 
 router.get('/v1/book/latest', async (ctx, next) => {
+
+  const {type} = ctx.query;
+
+  if(!type) {
+    const error = new HttpException('类型不能为空', 10001, 400);
+    // error.errorCode = 10001;
+    // error.requestUrl = `${ctx.method} ${ctx.path}`;
+    // error.status = 400;
+    throw error;
+  }
+
   ctx.body = {
     code: 0,
     msg: '请求成功',
