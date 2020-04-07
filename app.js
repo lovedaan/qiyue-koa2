@@ -1,5 +1,6 @@
 const Koa = require('koa');
 const koaBody = require('koa-body');
+// const mysql = require('mysql2/promise');
 const InitManager = require('./core/init');
 /*const classic = require('./api/v1/classic');
 const book = require('./api/v1/book');*/
@@ -19,6 +20,25 @@ InitManager.initCore(app);
   const path = process.cwd();
   console.log("path: ", path);
 */
+
+// 初始化数据库
+/*async function initDataBase() {
+  try {
+    // create the connection to database
+    const connection = await mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      database: 'koa2-test',
+      password: '123456'
+    });
+    const [data] = await connection.query('SELECT * FROM `user`');
+    console.log(data);
+  } catch(e) {
+    console.log(e)
+  }
+}
+
+initDataBase()*/
 
 
 app.listen(8000, () => {
