@@ -1,24 +1,30 @@
 const Router = require('koa-router');
 const router = new Router();
-const { HttpException } = require('../../../core/http-exception');
+// const { HttpException, ParameterException } = require('../../../core/http-exception');
 
-router.get('/v1/book/latest', async (ctx, next) => {
+const {PosityIntegerValidator} = require('../../validators/validator');
 
+router.get('/v1/book/latest/:id', async (ctx, next) => {
+  console.log(a)
   const {type} = ctx.query;
-
-  if(!type) {
-    const error = new HttpException('类型不能为空', 10001, 400);
+  const v = new PosityIntegerValidator().validate(ctx);
+  const id = v.get('path.id');
+  console.log(id)
+  /*if(!type) {
+    // const error = new HttpException('类型不能为空', 10001, 400);
+    // const error = new ParameterException();
     // error.errorCode = 10001;
     // error.requestUrl = `${ctx.method} ${ctx.path}`;
     // error.status = 400;
-    throw error;
-  }
+    // throw error;
+  }*/
 
   ctx.body = {
     code: 0,
     msg: '请求成功',
     data: {
-      name: 'book'
+      name: 'book',
+      id
     },
   };
 });

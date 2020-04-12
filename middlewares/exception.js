@@ -3,6 +3,11 @@ const ErrorHandle = async (ctx, next) => {
   try {
     await next();
   } catch(e) {
+    // console.log(e);
+    // 只有在开发环境下才抛出异常
+    if(global.config.environment === 'dev') {
+      throw e;
+    }
     if(e instanceof HttpException) {
       ctx.body = {
         errorCode: e.errorCode,
@@ -11,7 +16,12 @@ const ErrorHandle = async (ctx, next) => {
       };
       ctx.status = e.code;
     } else {
-      ctx.body = '未知的错误，请等一下吧';
+      ctx.body = {
+        errorCode: 9999,
+        message: '出错了，请稍后再试一下！',
+        requestUrl: `${ctx.method} ${ctx.path}`
+      };
+      ctx.status = 500;
     }
 
   }

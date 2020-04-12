@@ -31,10 +31,10 @@ InitManager.initCore(app);
     const connection = await mysql.createConnection({
       host: 'localhost',
       user: 'root',
-      database: 'koa2-test',
+      database: '7yue',
       password: '123456'
     });
-    const [data] = await connection.query('SELECT * FROM `user`');
+    const [data] = await connection.query('SELECT * FROM `test-user`');
     console.log(data);
   } catch(e) {
     console.log(e)
