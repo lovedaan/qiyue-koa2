@@ -2,9 +2,9 @@ const {db} = require('../../core/db');
 const {Sequelize, Model} = require('sequelize');
 
 class User extends Model {
-  constructor() {
+  /*constructor() {
     super();
-  }
+  }*/
 }
 
 User.init({
@@ -14,10 +14,50 @@ User.init({
     autoIncrement: true, // 自动增加
   },
   nickname: Sequelize.STRING,
-  email: Sequelize.STRING,
+  email: {
+    type: Sequelize.STRING(128).BINARY,
+    unique: true
+  },
   password: Sequelize.STRING,
   openid: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(64).BINARY,
     unique: true, // 唯一
   }
+}, {
+  sequelize: db,
+  modelName: 'user',
 });
+
+module.exports = {
+    User
+}
+
+/*
+// Find all users
+User.findAll().then(users => {
+  console.log("All users:", JSON.stringify(users, null, 4));
+});
+
+// Create a new user
+User.create({ firstName: "Jane", lastName: "Doe" }).then(jane => {
+  console.log("Jane's auto-generated ID:", jane.id);
+});
+
+// Delete everyone named "Jane"
+User.destroy({
+  where: {
+    firstName: "Jane"
+  }
+}).then(() => {
+  console.log("Done");
+});
+
+// Change everyone without a last name to "Doe"
+User.update({ lastName: "Doe" }, {
+  where: {
+    lastName: null
+  }
+}).then(() => {
+  console.log("Done");
+});
+ */

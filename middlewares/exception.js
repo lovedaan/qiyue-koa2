@@ -5,10 +5,12 @@ const ErrorHandle = async (ctx, next) => {
   } catch(e) {
     // console.log(e);
     // 只有在开发环境下才抛出异常
-    if(global.config.environment === 'dev') {
+    const isDev = global.config.environment === 'dev';
+    const isHttpException = e instanceof HttpException;
+    if(isDev && !isHttpException) {
       throw e;
     }
-    if(e instanceof HttpException) {
+    if(isHttpException) {
       ctx.body = {
         errorCode: e.errorCode,
         message: e.msg,
