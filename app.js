@@ -25,7 +25,7 @@ InitManager.initCore(app);
 */
 
 // 初始化数据库
-require('./app/models/user.js')
+// require('./app/models/user.js')
 /*async function initDataBase() {
   try {
     // create the connection to database

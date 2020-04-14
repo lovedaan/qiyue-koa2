@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    class A {
+      constructor() {
+        this.nameA = 'nameA';
+      }
+
+      valitateA() {
+        console.log('valitateA');
+      }
+
+    }
+
+    class B extends A {
+      constructor() {
+        super();
+        this.nameB = 'nameB';
+      }
+
+      valitateB() {
+        console.log('valitateB');
+      }
+
+    }
+
+    class C extends B {
+      constructor() {
+        super();
+        this.nameC = 'nameC';
+      }
+
+      valitateC() {
+        console.log('valitateC');
+      }
+
+    }
+
+    function findMembers (obj, attrFix, MethodFix) {
+
+      // hasOwnProperty()  返回一个布尔值,表示某个对象是否含有指定的属性，而且此属性非原型链继承的
+      const keys = Object.getOwnPropertyNames(obj);
+      console.log(keys)
+      /*console.dir(obj.__proto__ === obj.__proto__.constructor.prototype);
+      console.dir(obj.__proto__.constructor);*/
+       const m = Object.getPrototypeOf(obj.__proto__.constructor);
+       console.dir(Object.values(obj));
+
+      function _find(obj) {
+
+      }
+
+
+    }
+
+    const c = new C();
+    const a = new A();
+
+    const members = findMembers(c, 'name', 'valitate')
+
+    console.log(members);
+  </script>
+</body>
+</html>

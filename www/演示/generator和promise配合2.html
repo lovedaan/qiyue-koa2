@@ -18,14 +18,20 @@
         }, 1000);
       })
     }
-
-    const genRun = (function () {
+     /**
+       * 辅助generator函数运行
+       * @param  {[function]} gen [generator函数]
+       * @return {[type]}     [description]
+       */
       /**
        * [run description]
        * @param  {[any]} p   [可以是任意值，但希望是个promise对象]
        * @param  {[function]} gen [generator函数]
        * @return {[type]}     [最终的结果]
        */
+
+    const genRun = (function () {
+
       // gen.next()的时候，返回值的done如果为false，即后续还有代码块没执行，要递归调用
       function run(p, gen) {
         if(p && p.constructor === Promise) {
@@ -45,11 +51,6 @@
         }
       }
 
-      /**
-       * 辅助generator函数运行
-       * @param  {[function]} gen [generator函数]
-       * @return {[type]}     [description]
-       */
       return function (gen) {
         const g = gen();
         run(g.next().value, g);

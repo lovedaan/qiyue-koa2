@@ -3,7 +3,7 @@ const router = new Router({
   prefix: '/v1/user'
 });
 
-const {RegisterValidator} = require('../../validators/validator');
+const { RegisterValidator } = require('../../validators/validator');
 
 router.post('/register', async (ctx, next) => {
 
@@ -19,6 +19,5 @@ router.post('/register', async (ctx, next) => {
     },
   };
 });
-
 
 module.exports = router;
