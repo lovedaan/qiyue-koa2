@@ -12,16 +12,18 @@ const ErrorHandle = async (ctx, next) => {
     }
     if(isHttpException) {
       ctx.body = {
-        errorCode: e.errorCode,
+        errCode: e.errCode,
         message: e.msg,
-        requestUrl: `${ctx.method} ${ctx.path}`
+        requestUrl: `${ctx.method} ${ctx.path}`,
+        data: e.data,
       };
       ctx.status = e.code;
     } else {
       ctx.body = {
-        errorCode: 9999,
+        errCode: 9999,
         message: '出错了，请稍后再试一下！',
-        requestUrl: `${ctx.method} ${ctx.path}`
+        requestUrl: `${ctx.method} ${ctx.path}`,
+        data: null,
       };
       ctx.status = 500;
     }

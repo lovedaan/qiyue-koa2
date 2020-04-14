@@ -1,4 +1,5 @@
-const { Rule, LinValidator } = require('../../core/lin-validator');
+const { Rule, LinValidator } = require('../../core/lin-validator-v2');
+const {User} = require('../models/user');
 
 // 校验正整数的类
 class PosityIntegerValidator extends LinValidator {
@@ -33,6 +34,18 @@ class RegisterValidator extends LinValidator {
     if (pwd1 !== pwd2) {
       throw new Error('两次密码输入不一致');
     }
+  }
+  async validateEmail(vals) {
+    const email = vals.body.email;
+    const userInfo = await User.findOne({
+      where: {
+        email
+      }
+    });
+    if(userInfo) {
+      throw new Error('邮箱已存在');
+    }
+
   }
 }
 
