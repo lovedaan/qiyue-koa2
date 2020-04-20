@@ -1,5 +1,6 @@
 const { Rule, LinValidator } = require('../../core/lin-validator-v2');
 const {User} = require('../models/user');
+const { LoginType } = require('../lib/enume');
 
 // 校验正整数的类
 class PosityIntegerValidator extends LinValidator {
@@ -11,7 +12,7 @@ class PosityIntegerValidator extends LinValidator {
   }
 }
 
-// 登录参数校验
+// 注册参数校验
 class RegisterValidator extends LinValidator {
   constructor() {
     super();
@@ -49,7 +50,31 @@ class RegisterValidator extends LinValidator {
   }
 }
 
+// 登录参数校验
+class TokenValidator extends LinValidator {
+  constructor() {
+    super();
+    this.account = [
+      new Rule('isLength', '账号不符合长度规范', {min: 6, max: 32})
+    ];
+    this.secret = [
+      new Rule('isOptional'),
+      new Rule('isLength', '密码最少6位', { min: 8, max: 24 })
+    ];
+  }
+  validateLoginType(vals) {
+    const { type } = vals.body;
+    if(!type) {
+      throw new Error('type参数必填');
+    }
+    if (!LoginType.isLginType(type)) {
+      throw new Error('type参数不合法');
+    }
+  }
+}
+
 module.exports = {
   PosityIntegerValidator,
   RegisterValidator,
+  TokenValidator,
 };

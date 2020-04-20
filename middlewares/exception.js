@@ -3,10 +3,11 @@ const ErrorHandle = async (ctx, next) => {
   try {
     await next();
   } catch(e) {
-    // console.log(e);
+    console.log(e);
     // 只有在开发环境下才抛出异常
     const isDev = global.config.environment === 'dev';
     const isHttpException = e instanceof HttpException;
+    console.log(isHttpException, 'isHttpException----------')
     if(isDev && !isHttpException) {
       throw e;
     }

@@ -2,11 +2,25 @@ const bcrypt = require('bcryptjs');
 
 const {db} = require('../../core/db');
 const {Sequelize, Model} = require('sequelize');
+const { NoFound, AuthFailed} = require('../../core/http-exception');
+
 
 class User extends Model {
-  /*constructor() {
-    super();
-  }*/
+  static async verfyEmailPassword(email, plainPassword) {
+    const user = await User.findOne({
+      where: {email}
+    });
+    if(!user) {
+      throw new NoFound('邮箱不存在');
+    }
+    const correct = bcrypt.compareSync(plainPassword, user.dataValues.password);
+    if (!correct) {
+      throw new AuthFailed('密码错误');
+    }
+
+    return user.dataValues;
+
+  }
 }
 
 User.init({
@@ -20,6 +34,7 @@ User.init({
     type: Sequelize.STRING(128).BINARY,
     unique: true
   },
+  // 对密码进行加盐加密处理
   password: {
     type: Sequelize.STRING,
     set(val) {
